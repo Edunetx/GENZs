@@ -1,0 +1,187 @@
+/* minimal front-end logic + sample items + animated verification flow (mock) */
+
+// SAMPLE assets-based product list
+const PRODUCTS = [
+  { id: 'mtn-500', name: 'MTN Data 500MB', price: 200, logo: 'assets/logos/mtn.png' },
+  { id: 'airtel-1g', name: 'Airtel Data 1GB', price: 500, logo: 'assets/logos/airtel.png' },
+  { id: 'glo-1g', name: 'Glo Data 1GB', price: 450, logo: 'assets/logos/glo.png' },
+  { id: '9mobile-500', name: '9mobile Data 500MB', price: 220, logo: 'assets/logos/9mobile.png' },
+];
+
+// TV sample
+const TV = [
+  { id:'gotv', name:'GOtv Top-up', price:1200, logo:'assets/logos/gotv.png' },
+  { id:'dstv', name:'DStv Top-up', price:2500, logo:'assets/logos/dstv.png' },
+  { id:'startimes', name:'Startimes', price:800, logo:'assets/logos/startimes.png' },
+];
+
+// Electricity VTU sample
+const ELECTRIC = [
+  { id:'ekedc', name:'PHCN / Electricity Token', price:3000, logo:'assets/logos/electric.png' }
+];
+
+let transactions = [];
+
+/* ------------------ UI helpers ------------------ */
+function qs(sel){ return document.querySelector(sel) }
+function qsa(sel){ return Array.from(document.querySelectorAll(sel)) }
+
+// tab switching
+qsa('.tab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    qsa('.tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const target = btn.dataset.target;
+    qsa('.panel').forEach(p=>p.classList.remove('active'));
+    qs('#'+target).classList.add('active');
+  });
+});
+
+// renderers
+function renderProducts(){
+  const list = qs('#product-list');
+  list.innerHTML = '';
+  PRODUCTS.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="logo"><img src="${p.logo}" alt="${p.name}" style="max-width:100%; max-height:100%"></div>
+      <div class="meta">
+        <h3>${p.name}</h3>
+        <p>₦${p.price}</p>
+      </div>
+      <div><button class="btn" data-id="${p.id}">Buy</button></div>
+    `;
+    list.appendChild(card);
+  });
+
+  // attach buy handlers
+  qsa('.btn').forEach(b=>{
+    b.addEventListener('click', e=>{
+      const id = e.currentTarget.dataset.id;
+      buyProduct(id);
+    })
+  });
+}
+
+function renderTV(){
+  const tvList = qs('#tv-list');
+  tvList.innerHTML = '';
+  TV.forEach(t=>{
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = `
+      <div class="logo"><img src="${t.logo}" alt="${t.name}" style="max-width:100%; max-height:100%"></div>
+      <div class="meta"><h3>${t.name}</h3><p>From ₦${t.price}</p></div>
+      <div><button class="btn" data-id="${t.id}">Pay</button></div>
+    `;
+    tvList.appendChild(c);
+  });
+
+  qsa('#tv-list .btn').forEach(b=>{
+    b.addEventListener('click', e=>{
+      mockVerify(() => addTransaction('TV', e.currentTarget.dataset.id));
+    });
+  });
+}
+
+function renderElec(){
+  const el = qs('#elec-list');
+  el.innerHTML = '';
+  ELECTRIC.forEach(t=>{
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = `
+      <div class="logo"><img src="${t.logo}" alt="${t.name}" style="max-width:100%; max-height:100%"></div>
+      <div class="meta"><h3>${t.name}</h3><p>From ₦${t.price}</p></div>
+      <div><button class="btn" data-id="${t.id}">Buy Token</button></div>
+    `;
+    el.appendChild(c);
+  });
+
+  qsa('#elec-list .btn').forEach(b=>{
+    b.addEventListener('click', e=>{
+      mockVerify(() => addTransaction('Electricity', e.currentTarget.dataset.id));
+    });
+  });
+}
+
+function renderHistory(){
+  const dst = qs('#transaction-history');
+  dst.innerHTML = '';
+  if(!transactions.length) { dst.innerHTML = '<div class="card"><div class="meta small">No transactions yet.</div></div>'; return }
+  transactions.slice().reverse().forEach(t=>{
+    const c = document.createElement('div');
+    c.className = 'card';
+    c.innerHTML = `
+      <div class="logo"><img src="${t.logo||'assets/logos/aaua-logo.png'}" alt="tlogo" style="max-width:100%; max-height:100%"></div>
+      <div class="meta"><h3>${t.title}</h3><p class="small">₦${t.amount} • ${t.time}</p></div>
+    `;
+    dst.appendChild(c);
+  })
+}
+
+/* ------------------ buy + verification (mock) ------------------ */
+
+// find product by id
+function getProductById(id){
+  return PRODUCTS.find(p=>p.id===id) || TV.find(t=>t.id===id) || ELECTRIC.find(e=>e.id===id);
+}
+
+function buyProduct(id){
+  const p = getProductById(id);
+  if(!p) return alert('Product not found');
+  // open quick confirm
+  const ok = confirm(`Buy ${p.name} for ₦${p.price}?`);
+  if(!ok) return;
+  // run verification flow then add transaction
+  mockVerify(() => addTransaction('Product', id));
+}
+
+// mockVerify simulates: check email -> check SMS keywords -> check app webhook
+function mockVerify(onSuccess){
+  // show a quick animated modal (simple alerts for now)
+  const steps = ['Checking email confirmation','Scanning SMS for transaction keywords','Validating app/webhook notification'];
+  let i=0;
+  const tick = ()=>{
+    if(i < steps.length){
+      // progressive check
+      console.log(steps[i]);
+      i++;
+      setTimeout(tick, 900);
+    } else {
+      const ok = Math.random() > 0.06; // ~94% success
+      if(ok){ onSuccess(); alert('Payment verified — credited ✅') }
+      else { alert('Verification failed — check SMS/email/app ❌') }
+      // re-render history
+      renderHistory();
+    }
+  }
+  tick();
+}
+
+function addTransaction(type, id){
+  const p = getProductById(id) || {};
+  const title = p.name || type;
+  const amount = p.price || 0;
+  transactions.push({ title, amount, time: new Date().toLocaleString(), logo: p.logo });
+  // update UI
+  updateBalance();
+  renderHistory();
+}
+
+/* update fake balance display */
+function updateBalance(){
+  const amount = transactions.reduce((s,t)=>s + (t.amount||0), 0);
+  qs('.balance .amount').textContent = `₦${amount.toLocaleString()}`;
+}
+
+/* init */
+function init(){
+  renderProducts();
+  renderTV();
+  renderElec();
+  renderHistory();
+  updateBalance();
+}
+init();
