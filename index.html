@@ -1,71 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AAUA Data Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Fullscreen background */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    /* Wrapper */
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+
+    /* Hero section */
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+
+    /* Service grid */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .card img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 0.8rem;
+      background: #fff;
+      border-radius: 0.5rem;
+      padding: 0.3rem;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
 </head>
 <body>
-  <!-- Fullscreen background -->
-  <div class="bg"></div>
-
-  <!-- Landing container -->
-  <div class="landing">
-    <header class="hero">
-      <img src="assets/logos/aaua-logo.png" alt="AAUA Data Hub" class="brand-logo" />
+  <div class="container">
+    <header>
       <h1>AAUA Data Hub</h1>
-      <p class="tagline">Fast Data · Airtime · TV · Electricity</p>
-      <a href="dashboard.html" class="cta">Enter Dashboard</a>
+      <p>Buy Data • Airtime • TV Subscriptions • Electricity • More</p>
     </header>
 
-    <!-- Services section -->
     <section class="services">
-      <h2>Our Services</h2>
-      <div class="cards">
-        <!-- Telecom -->
-        <div class="card">
-          <img src="assets/logos/mtn.png" alt="MTN" />
-          <p>MTN Data & Airtime</p>
-        </div>
-        <div class="card">
-          <img src="assets/logos/airtel.png" alt="Airtel" />
-          <p>Airtel Data & Airtime</p>
-        </div>
-        <div class="card">
-          <img src="assets/logos/glo.png" alt="Glo" />
-          <p>Glo Data & Airtime</p>
-        </div>
-        <div class="card">
-          <img src="assets/logos/9mobile.png" alt="9mobile" />
-          <p>9mobile Data & Airtime</p>
-        </div>
+      <!-- Telcos -->
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/MTN_Logo.svg" alt="MTN" />
+        <p>MTN Data & Airtime</p>
+      </div>
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Airtel_logo_2010.png" alt="Airtel" />
+        <p>Airtel Data & Airtime</p>
+      </div>
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Globacom_logo.svg" alt="Glo" />
+        <p>Glo Data & Airtime</p>
+      </div>
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/9mobile_logo.png" alt="9mobile" />
+        <p>9mobile Data & Airtime</p>
+      </div>
 
-        <!-- TV -->
-        <div class="card">
-          <img src="assets/logos/dstv.png" alt="DStv" />
-          <p>DStv Subscription</p>
-        </div>
-        <div class="card">
-          <img src="assets/logos/gotv.png" alt="GOtv" />
-          <p>GOtv Subscription</p>
-        </div>
-        <div class="card">
-          <img src="assets/logos/startimes.png" alt="Startimes" />
-          <p>Startimes Subscription</p>
-        </div>
+      <!-- TV -->
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/DStv_Logo_2020.png" alt="DStv" />
+        <p>DStv Subscription</p>
+      </div>
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/GOtv_logo.png" alt="GOtv" />
+        <p>GOtv Subscription</p>
+      </div>
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Startimes_logo.png" alt="Startimes" />
+        <p>Startimes Subscription</p>
+      </div>
 
-        <!-- Electricity -->
-        <div class="card">
-          <img src="assets/logos/electric.png" alt="Electricity" />
-          <p>Electricity Bill Payment</p>
-        </div>
+      <!-- Utilities -->
+      <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Electricity_icon.png" alt="Electricity" />
+        <p>Electricity Bills</p>
       </div>
     </section>
 
     <footer>
-      <p>© 2025 AAUA Data Hub — Built by OBA</p>
+      © 2025 AAUA Data Hub. Powered by OBA.
     </footer>
   </div>
 </body>
