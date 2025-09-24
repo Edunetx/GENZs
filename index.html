@@ -1,138 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AAUA Data Hub</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OBA Data Hub</title>
   <style>
-    /* Fullscreen background */
-    body {
+    body, html {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      background-size: cover;
-      background-attachment: fixed;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+      font-family: 'Poppins', sans-serif;
+      color: white;
     }
-
-    /* Wrapper */
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 2rem 1rem;
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
     }
-
-    /* Hero section */
     header {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 80px 20px;
     }
-
     header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 3rem;
+      margin-bottom: 10px;
     }
-
     header p {
       font-size: 1.2rem;
-      color: #ccc;
+      margin-bottom: 30px;
     }
-
-    /* Service grid */
+    .cta-buttons a {
+      display: inline-block;
+      margin: 10px;
+      padding: 15px 30px;
+      background: #ffcc00;
+      color: black;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .cta-buttons a:hover {
+      background: #ffaa00;
+    }
     .services {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 1rem;
-      padding: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 20px;
+      padding: 40px;
       text-align: center;
-      transition: transform 0.2s ease-in-out;
     }
-
-    .card:hover {
-      transform: translateY(-5px);
-      background: rgba(255, 255, 255, 0.15);
+    .services img {
+      width: 100px;
+      height: auto;
+      margin: auto;
     }
-
-    .card img {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
-      margin-bottom: 0.8rem;
-      background: #fff;
-      border-radius: 0.5rem;
-      padding: 0.3rem;
-    }
-
-    .card p {
-      margin: 0;
-      font-size: 0.95rem;
-    }
-
     footer {
       text-align: center;
-      margin-top: 4rem;
-      padding: 2rem 1rem;
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      margin-top: 40px;
       font-size: 0.9rem;
-      color: #aaa;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>AAUA Data Hub</h1>
-      <p>Buy Data • Airtime • TV Subscriptions • Electricity • More</p>
-    </header>
+  <canvas id="particles"></canvas>
 
-    <section class="services">
-      <!-- Telcos -->
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/MTN_Logo.svg" alt="MTN" />
-        <p>MTN Data & Airtime</p>
-      </div>
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Airtel_logo_2010.png" alt="Airtel" />
-        <p>Airtel Data & Airtime</p>
-      </div>
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Globacom_logo.svg" alt="Glo" />
-        <p>Glo Data & Airtime</p>
-      </div>
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/9mobile_logo.png" alt="9mobile" />
-        <p>9mobile Data & Airtime</p>
-      </div>
+  <header>
+    <h1>Welcome to OBA Data Hub</h1>
+    <p>The fastest way to buy Data, Airtime & Pay Bills ⚡</p>
+    <div class="cta-buttons">
+      <a href="#">Buy Data</a>
+      <a href="#">Pay Bills</a>
+    </div>
+  </header>
 
-      <!-- TV -->
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/DStv_Logo_2020.png" alt="DStv" />
-        <p>DStv Subscription</p>
-      </div>
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/GOtv_logo.png" alt="GOtv" />
-        <p>GOtv Subscription</p>
-      </div>
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Startimes_logo.png" alt="Startimes" />
-        <p>Startimes Subscription</p>
-      </div>
+  <section class="services">
+    <!-- Replace with actual logos -->
+    <img src="mtn.png" alt="MTN">
+    <img src="airtel.png" alt="Airtel">
+    <img src="glo.png" alt="Glo">
+    <img src="9mobile.png" alt="9mobile">
+    <img src="dstv.png" alt="DStv">
+    <img src="gotv.png" alt="GOtv">
+    <img src="startimes.png" alt="Startimes">
+    <img src="phcn.png" alt="Electricity">
+  </section>
 
-      <!-- Utilities -->
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Electricity_icon.png" alt="Electricity" />
-        <p>Electricity Bills</p>
-      </div>
-    </section>
+  <footer>
+    &copy; 2025 OBA Data Hub | Made with ❤️ by OBA
+  </footer>
 
-    <footer>
-      © 2025 AAUA Data Hub. Powered by OBA.
-    </footer>
-  </div>
+  <script>
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    const numParticles = 100;
+
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        dx: (Math.random() - 0.5) * 2,
+        dy: (Math.random() - 0.5) * 2,
+        size: Math.random() * 3 + 1
+      });
+    }
+
+    function animate() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = "#fff";
+        ctx.fill();
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
 </body>
 </html>
