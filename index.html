@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AAUA Data Hub — Top-up & Bills</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- full-screen background layer -->
+  <div class="bg"></div>
+
+  <!-- centered content box (scrollable to make the page long on mobile) -->
+  <div class="container" role="main" aria-label="AAUA Data Hub">
+    <header class="top">
+      <div class="brand">
+        <img src="assets/logos/aaua-logo.png" alt="AAUA Data Hub" class="brand-logo" />
+        <div>
+          <h1>AAUA Data Hub</h1>
+          <p class="tagline">Top-up Data · Airtime · TV Subscriptions · Electricity VTU</p>
+        </div>
+      </div>
+      <div class="balance">
+        <div>Balance</div>
+        <div class="amount">₦0.00</div>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-target="products">Products</button>
+      <button class="tab" data-target="tv">TV</button>
+      <button class="tab" data-target="electricity">Electricity</button>
+      <button class="tab" data-target="history">History</button>
+      <button class="tab" data-target="faq">FAQ</button>
+    </nav>
+
+    <main class="content">
+      <!-- PRODUCTS -->
+      <section id="products" class="panel active">
+        <h2>Top Networks</h2>
+        <div id="product-list" class="cards"></div>
+
+        <h3 class="section-title">Special Offers</h3>
+        <div class="cards small" id="offers-list"></div>
+
+        <h3 class="section-title">Quick Buy (popular amounts)</h3>
+        <div class="quick-grid">
+          <button class="quick">₦100</button>
+          <button class="quick">₦200</button>
+          <button class="quick">₦500</button>
+          <button class="quick">₦1000</button>
+        </div>
+      </section>
+
+      <!-- TV -->
+      <section id="tv" class="panel">
+        <h2>TV Subscriptions</h2>
+        <div class="cards" id="tv-list"></div>
+
+        <h3 class="section-title">Packages (example)</h3>
+        <ul class="info-list">
+          <li>GOtv Max — monthly packages</li>
+          <li>DStv — full bouquet topups</li>
+          <li>Startimes — decoder bundles</li>
+        </ul>
+      </section>
+
+      <!-- ELECTRICITY -->
+      <section id="electricity" class="panel">
+        <h2>Electricity VTU</h2>
+        <div class="cards" id="elec-list"></div>
+
+        <p class="muted">We support token top-up via meter number. Always verify SMS & app confirmation before crediting.</p>
+      </section>
+
+      <!-- HISTORY -->
+      <section id="history" class="panel">
+        <h2>Transaction History</h2>
+        <div id="transaction-history" class="cards"></div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="panel">
+        <h2>FAQ & Verifications</h2>
+        <div class="faq">
+          <details open>
+            <summary>How do we verify payments?</summary>
+            <p>We check payment status via email confirmation, SMS transaction keywords, and in-app/webhook notifications before crediting the dashboard.</p>
+          </details>
+          <details>
+            <summary>What if payment doesn't arrive?</summary>
+            <p>Transaction logs are stored and visible in Dashboard — support will reconcile within 24 hours.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div>© 2025 AAUA Data Hub — Built by OBA</div>
+      <div class="small">Deploy: Netlify / Vercel • Mobile-first</div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
