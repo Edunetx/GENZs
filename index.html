@@ -2,142 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OBA Data Hub</title>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow-x: hidden;
-      font-family: 'Poppins', sans-serif;
-      color: white;
-    }
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-    header {
-      text-align: center;
-      padding: 80px 20px;
-    }
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
-    header p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
-    .cta-buttons a {
-      display: inline-block;
-      margin: 10px;
-      padding: 15px 30px;
-      background: #ffcc00;
-      color: black;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .cta-buttons a:hover {
-      background: #ffaa00;
-    }
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 20px;
-      padding: 40px;
-      text-align: center;
-    }
-    .services img {
-      width: 100px;
-      height: auto;
-      margin: auto;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.7);
-      margin-top: 40px;
-      font-size: 0.9rem;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OBATA VTU Services</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 </head>
 <body>
-  <canvas id="particles"></canvas>
+  <!-- Navigation -->
+  <nav class="container-fluid">
+    <ul>
+      <li><strong>OBATA VTU</strong></li>
+    </ul>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#" role="button">Login</a></li>
+    </ul>
+  </nav>
 
-  <header>
-    <h1>Welcome to OBA Data Hub</h1>
-    <p>The fastest way to buy Data, Airtime & Pay Bills ⚡</p>
-    <div class="cta-buttons">
-      <a href="#">Buy Data</a>
-      <a href="#">Pay Bills</a>
+  <!-- Main -->
+  <main class="container">
+    <div class="grid">
+      <section>
+        <hgroup>
+          <h2>Buy Airtime Instantly</h2>
+          <h3>Fast, reliable, and secure</h3>
+        </hgroup>
+        <p>Use the form below to top up any Nigerian number instantly.</p>
+
+        <!-- Airtime Form -->
+        <form onsubmit="buyAirtime(event)">
+          <label for="network">Select Network</label>
+          <select id="network" required>
+            <option value="mtn">MTN</option>
+            <option value="glo">GLO</option>
+            <option value="airtel">Airtel</option>
+            <option value="9mobile">9mobile</option>
+          </select>
+
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="08012345678" required>
+
+          <label for="amount">Amount (₦)</label>
+          <input type="number" id="amount" min="50" step="50" required>
+
+          <button type="submit">Buy Airtime</button>
+        </form>
+      </section>
     </div>
-  </header>
+  </main>
 
-  <section class="services">
-    <!-- Replace with actual logos -->
-    <img src="mtn.png" alt="MTN">
-    <img src="airtel.png" alt="Airtel">
-    <img src="glo.png" alt="Glo">
-    <img src="9mobile.png" alt="9mobile">
-    <img src="dstv.png" alt="DStv">
-    <img src="gotv.png" alt="GOtv">
-    <img src="startimes.png" alt="Startimes">
-    <img src="phcn.png" alt="Electricity">
-  </section>
-
-  <footer>
-    &copy; 2025 OBA Data Hub | Made with ❤️ by OBA
+  <footer class="container">
+    <small><a href="#">OBATA</a> • <a href="#">Powered by Zendek</a></small>
   </footer>
 
+  <!-- Script -->
   <script>
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    async function buyAirtime(event) {
+      event.preventDefault();
 
-    let particles = [];
-    const numParticles = 100;
+      const phone = document.getElementById("phone").value;
+      const amount = document.getElementById("amount").value;
+      const network = document.getElementById("network").value;
 
-    for (let i = 0; i < numParticles; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        dx: (Math.random() - 0.5) * 2,
-        dy: (Math.random() - 0.5) * 2,
-        size: Math.random() * 3 + 1
-      });
+      const productCodes = {
+        mtn: "mtn_custom",
+        glo: "glo_custom",
+        airtel: "airtel_custom",
+        "9mobile": "9mobile_custom"
+      };
+
+      const payload = {
+        amount: amount,
+        product_code: productCodes[network],
+        phone_number: phone,
+        action: "vend",
+        user_reference: "OBATA_" + Date.now(),
+        bypass_network: "yes"
+      };
+
+      try {
+        const response = await fetch("/.netlify/functions/airtime", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        console.log("API Response:", data);
+
+        if (data.status) {
+          alert("✅ Airtime purchase successful: " + data.server_message);
+        } else {
+          alert("❌ Failed: " + data.server_message);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("⚠️ Error connecting to Airtime Service");
+      }
     }
-
-    function animate() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = "#fff";
-        ctx.fill();
-
-        p.x += p.dx;
-        p.y += p.dy;
-
-        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-      });
-
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
   </script>
 </body>
 </html>
